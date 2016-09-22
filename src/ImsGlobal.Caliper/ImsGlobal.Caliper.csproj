@@ -115,7 +115,6 @@
     <Compile Include="Events\Assessment\AssessmentEvent.cs" />
     <Compile Include="Events\Assignable\AssignableEvent.cs" />
     <Compile Include="CaliperContext.cs" />
-    <Compile Include="Events\BaseEvent.cs" />
     <Compile Include="Events\EventType.cs" />
     <Compile Include="Events\Session\SessionEvent.cs" />
     <Compile Include="Events\Media\MediaEvent.cs" />

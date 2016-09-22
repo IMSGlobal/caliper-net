@@ -16,7 +16,7 @@ namespace ImsGlobal.Caliper.Entities {
 
 		public Entity( string id )
 			: base( id ) {
-			this.Extensions = new Dictionary<string, string>();
+			this.Extensions = new Object();
 		}
 
 		[JsonProperty( "@context", Order = 0 )]
@@ -31,7 +31,7 @@ namespace ImsGlobal.Caliper.Entities {
 		public string Description { get; set; }
 
 		[JsonProperty( "extensions", Order = 51 )]
-		public IDictionary<string, string> Extensions { get; set; }
+		public Object Extensions { get; set; }
 
 		[JsonProperty( "dateCreated", Order = 52 )]
 		public Instant? DateCreated { get; set; }

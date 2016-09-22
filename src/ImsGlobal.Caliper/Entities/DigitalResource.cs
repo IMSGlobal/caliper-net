@@ -9,6 +9,7 @@ using NodaTime;
 
 namespace ImsGlobal.Caliper.Entities {
 	using ImsGlobal.Caliper.Entities.SchemaDotOrg;
+    using ImsGlobal.Caliper.Entities.Agent;
 
 	/// <summary>
 	/// Caliper representation of a CreativeWork (https://schema.org/CreativeWork)
@@ -21,6 +22,7 @@ namespace ImsGlobal.Caliper.Entities {
 			this.ObjectTypes = new List<string>();
 			this.AlignedLearningObjectives = new List<LearningObjective>();
 			this.Keywords = new List<string>();
+            this.Creators = new List<Person>();
 		}
 
 		/// <summary>
@@ -41,10 +43,16 @@ namespace ImsGlobal.Caliper.Entities {
 		[JsonProperty( "keywords", Order = 13 )]
 		public IList<string> Keywords { get; set; }
 
-		/// <summary>
-		/// A reference to the parent resource, if any.
+        /// <summary>
+		/// List of creators that describe this resource.
 		/// </summary>
-		[JsonProperty( "isPartOf", Order = 61 )]
+		[JsonProperty("creators", Order = 14)]
+        public IList<Person> Creators { get; set; }
+
+        /// <summary>
+        /// A reference to the parent resource, if any.
+        /// </summary>
+        [JsonProperty( "isPartOf", Order = 61 )]
 		public ICreativeWork IsPartOf { get; set; }
 
 		/// <summary>

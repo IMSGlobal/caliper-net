@@ -19,13 +19,7 @@ namespace ImsGlobal.Caliper.Events.Reading {
 			this.Type = EventType.Navigation;
 			this.Action = Action.NavigatedTo;
 		}
-
-		/// <summary>
-		/// The resource from which the navigation starts.
-		/// </summary>
-		[JsonProperty( "navigatedFrom", Order = 99 )]
-		public DigitalResource FromResource { get; set; }
-
+        
 	}
 
 }
