@@ -36,7 +36,8 @@ namespace ImsGlobal.Caliper.Events {
 		public static readonly Action Highlighted = new Action( "Highlighted");
 		public static readonly Action Identified = new Action( "Identified");
 		public static readonly Action JumpedTo = new Action( "JumpedTo");
-		public static readonly Action Liked = new Action( "Liked");
+        public static readonly Action Launched = new Action("Launched");
+        public static readonly Action Liked = new Action( "Liked");
 		public static readonly Action Linked = new Action( "Linked");
 		public static readonly Action LoggedIn = new Action( "LoggedIn");
 		public static readonly Action LoggedOut = new Action( "LoggedOut");
@@ -56,7 +57,8 @@ namespace ImsGlobal.Caliper.Events {
 		public static readonly Action Restarted = new Action( "Restarted");
 		public static readonly Action Resumed = new Action( "Resumed");
 		public static readonly Action Retrieved = new Action( "Retrieved");
-		public static readonly Action Reviewed = new Action( "Reviewed");
+        public static readonly Action Returned = new Action("Returned");
+        public static readonly Action Reviewed = new Action( "Reviewed");
 		public static readonly Action Rewound = new Action( "Rewound");
 		public static readonly Action Searched = new Action( "Searched");
 		public static readonly Action Shared = new Action( "Shared" );

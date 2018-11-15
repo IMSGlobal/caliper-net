@@ -63,7 +63,8 @@ namespace ImsGlobal.Caliper.Tests {
         public static Instant Instant20180801060000 = Instant.FromUtc(2018, 08, 01, 06, 00, 00);
         public static Instant Instant20181115100000 = Instant.FromUtc(2018, 11, 15, 10, 00, 00);
         public static Instant Instant20181115100500 = Instant.FromUtc(2018, 11, 15, 10, 05, 00);
-        
+        public static Instant Instant20181115101500 = Instant.FromUtc(2018, 11, 15, 10, 15, 00);
+
         public static Person Person778899 = new Person("https://example.edu/users/778899");
 		public static Person Person554433 = new Person("https://example.edu/users/554433");
 		public static Person Person112233 = new Person("https://example.edu/users/112233");
@@ -519,38 +520,96 @@ namespace ImsGlobal.Caliper.Tests {
 
         public class LtiParamsLtiSession
         {
-            public string lti_message_type = "basic-lti-launch-request";
+            public string iss = "https://example.edu";
+            public string sub = "https://example.edu/users/554433";
+            public string[] aud = new[] { "https://example.com/lti/tool" };
+            public long exp = 1510185728;
+            public long iat = 1510185228;
+            public string azp = "962fa4d8-bcbf-49a0-94b2-2de05ad274af";
+            public string nonce = "fc5fdc6d-5dd6-47f4-b2c9-5d1216e9b771";
+            public string name = "Ms Jane Marie Doe";
+            public string given_name = "Jane";
+            public string family_name = "Doe";
+            public string middle_name = "Marie";
+            public string picture = "https://example.edu/jane.jpg";
+            public string email = "jane@example.edu";
+            public string locale = "en-US";
 
-            public string lti_version = "LTI-1p0";
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/deployment_id")]
+            public string deployment_id = "07940580-b309-415e-a37c-914d387c1150";
 
-            public string context_id = "https://example.edu/terms/201801/courses/7/sections/1";
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/message_type")]
+            public string message_type = "LtiResourceLinkRequest";
 
-            public string context_type = "urn:lti:context-type:ims/lis/CourseSection";
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/version")]
+            public string version = "1.3.0";
 
-            public string context_label = "CPS 435-01";
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/roles")]
+            public string[] roles = new[]{
+                "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Student",
+                "http://purl.imsglobal.org/vocab/lis/v2/membership#Learner",
+                "http://purl.imsglobal.org/vocab/lis/v2/membership#Mentor"
+            };
 
-            public string context_title = "CPS 435 Learning Analytics, Section 01";
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/role_scope_mentor")]
+            public string[] role_scope_mentor = new string[] { "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Administrator" };
 
-            public string resource_link_id = "6b37a950-42c9-4117-8f4f-03e6e5c88d24";
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/context")]
+            public object context = new
+            {
+                id = "https://example.edu/terms/201801/courses/7/sections/1",
+                label = "CPS 435-01",
+                title = "CPS 435 Learning Analytics, Section 01",
+                type = new[] { "http://purl.imsglobal.org/vocab/lis/v2/course#CourseSection" }
+            };
 
-            public string[] roles = new[] { "urn:lti:role:ims/lis/Learner" };
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/resource_link")]
+            public object resource_link = new
+            {
+                id = "200d101f-2c14-434a-a0f3-57c2a42369fd",
+                description = "Assignment to introduce who you are",
+                title = "Introduction Assignment"
+            };
 
-            public string tool_consumer_instance_guid = "SomeLMS.example.edu";
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/tool_platform")]
+            public object tool_platform = new
+            {
+                guid = "https://example.edu",
+                contact_email = "support@example.edu",
+                description = "An Example Tool Platform",
+                name = "Example Tool Platform",
+                url = "https://example.edu",
+                product_family_code = "ExamplePlatformVendor-Product",
+                version = "1.0"
+            };
 
-            public string tool_consumer_instance_description = "Sample University (SomeLMS)";
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/launch_presentation")]
+            public object launch_presentation = new
+            {
+                document_target = "iframe",
+                height = 320,
+                width = 240,
+                return_url = "https://example.edu/terms/201801/courses/7/sections/1/pages/1"
+            };
 
-            public string user_id = "0ae836b9-7fc9-4060-006f-27b2066ac545";
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/custom")]
+            public object custom = new
+            {
+                xstart = "2017-04-21T01:00:00Z",
+                request_url = "https://tool.com/link/123"
+            };
 
-            public Instant custom_xstart = Instant.FromUtc(2016, 08, 21, 01, 00, 00);
+            [JsonProperty("https://purl.imsglobal.org/spec/lti/claim/lis")]
+            public object lis = new
+            {
+                person_sourcedid = "example.edu:71ee7e42-f6d2-414a-80db-b69ac2defd4",
+                course_offering_sourcedid = "example.edu:SI182-F16",
+                course_section_sourcedid = "example.edu:SI182-001-F16"
+            };
 
-            public string custom_caliper_profile_url = "https://example.edu/lti/tc/cps";
-
-            public string custom_caliper_session_id = "1c519ff7-3dfa-4764-be48-d2fb35a2925a";
-
-            public string ext_com_somelms_example_course_section_instructor = "https://example.edu/faculty/1234";
+            [JsonProperty("http://www.ExamplePlatformVendor.com/session")]
+            public object session = new { id = "89023sj890dju080" };
         };
-
-
 
         public static DigitalResource DigitalResourceSyllabusPDF = new DigitalResource(
 			"https://example.edu/terms/201601/courses/7/sections/1/resources/1/syllabus.pdf") {

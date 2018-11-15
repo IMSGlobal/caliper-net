@@ -35,8 +35,9 @@ namespace ImsGlobal.Caliper.Tests {
 	using static JsonSerializeUtils;
 	using System.Collections;
 	using NodaTime.Text;
+    using ImsGlobal.Caliper.Entities.ToolLaunch;
 
-	[TestFixture]
+    [TestFixture]
 	public class Caliper11Tests {
 
 		[OneTimeSetUp]
@@ -477,9 +478,10 @@ namespace ImsGlobal.Caliper.Tests {
 		[Test]
 		public void EntityLtiSession_MatchesReferenceJson() {
 
-			var entity = new LtiSession(
+            var entity = new LtiSession(
                 "https://example.edu/lti/sessions/b533eb02823f31024e6b7f53436c42fb99b31241") {
-				User = new Person("https://example.edu/users/554433"),
+                Context = CaliperContext.ToolLaunchProfileExtension.Value,
+                User = new Person("https://example.edu/users/554433") { HideCaliperContext = true },
                 MessageParameters = new Caliper11TestEntities.LtiParamsLtiSession(),
                 DateCreated = Instant.FromUtc(2018, 11, 15, 10, 15, 00),
                 StartedAt = Instant.FromUtc(2018, 11, 15, 10, 15, 00)
@@ -1897,6 +1899,95 @@ namespace ImsGlobal.Caliper.Tests {
 
             JsonAssertions.AssertSameObjectJson(coerced, "caliperEventSearchSearched");
         }
+        
+        [Test]
+        public void EventToolLaunchLaunched_MatchesReferenceJson()
+        {
+            var toolLaunchEvent = new ToolLaunchEvent(
+                "urn:uuid:a2e8b214-4d4a-4456-bb4c-099945749117", Action.Launched)
+            {
+                Actor = new Person("https://example.edu/users/554433") { HideCaliperContext = true },
+                Object = new SoftwareApplication("https://example.com/lti/tool") { HideCaliperContext = true },
+                EventTime = Caliper11TestEntities.Instant20181115101500,
+                EdApp = new SoftwareApplication("https://example.edu") { HideCaliperContext = true },
+                Referrer = new Entity("https://example.edu/terms/201801/courses/7/sections/1/pages/1") { Type = EntityType.WebPage, HideCaliperContext = true },
+                Group = new CourseSection("https://example.edu/terms/201801/courses/7/sections/1")
+                {
+                    CourseNumber = "CPS 435-01",
+                    AcademicSession = "Fall 2018",
+                    HideCaliperContext = true
+                },
+                Membership = new Membership("https://example.edu/terms/201801/courses/7/sections/1/rosters/1")
+                {
+                    Member = new Person("https://example.edu/users/554433"),
+                    Organization = new Organization("https://example.edu/terms/201801/courses/7/sections/1"),
+                    Roles = new[] { Role.Learner },
+                    Status = Status.Active,
+                    DateCreated = Caliper11TestEntities.Instant20180801060000,
+                    HideCaliperContext = true
+                },
+                Session = Caliper11TestEntities.Session6259_2018,
+                Target = new LtiLink("https://tool.com/link/123")
+                {
+                    MessageType = EntityType.LtiResourceLinkRequest,
+                    HideCaliperContext = true
+                },
+                FederatedSession = new LtiSession("https://example.edu/lti/sessions/b533eb02823f31024e6b7f53436c42fb99b31241")
+                {
+                    User = new Person("https://example.edu/users/554433") { HideCaliperContext = true },
+                    MessageParameters = new Caliper11TestEntities.LtiParamsLtiSession(),
+                    DateCreated = Caliper11TestEntities.Instant20181115101500,
+                    StartedAt = Caliper11TestEntities.Instant20181115101500,
+                    HideCaliperContext = true
+                }
+            };
 
+            var coerced = JsonAssertions.coerce(toolLaunchEvent, new [] { "..membership.member", "..membership.organization" });
+
+            JsonAssertions.AssertSameObjectJson(coerced, "caliperEventToolLaunchLaunched");
+        }
+
+
+        [Test]
+        public void EventToolLaunchReturned_MatchesReferenceJson()
+        {
+            var toolLaunchEvent = new ToolLaunchEvent(
+                "urn:uuid:a2e8b214-4d4a-4456-bb4c-099945749117", Action.Returned)
+            {
+                Actor = new Person("https://example.edu/users/554433") { HideCaliperContext = true },
+                Object = new SoftwareApplication("https://example.com/lti/tool") { HideCaliperContext = true },
+                EventTime = Caliper11TestEntities.Instant20181115101500,
+                EdApp = new SoftwareApplication("https://example.edu") { HideCaliperContext = true },
+                Referrer = new Entity("https://tool.com/lti/123") { Type = EntityType.LtiLink, HideCaliperContext = true },
+                Group = new CourseSection("https://example.edu/terms/201801/courses/7/sections/1")
+                {
+                    CourseNumber = "CPS 435-01",
+                    AcademicSession = "Fall 2018",
+                    HideCaliperContext = true
+                },
+                Membership = new Membership("https://example.edu/terms/201801/courses/7/sections/1/rosters/1")
+                {
+                    Member = new Person("https://example.edu/users/554433"),
+                    Organization = new Organization("https://example.edu/terms/201801/courses/7/sections/1"),
+                    Roles = new[] { Role.Learner },
+                    Status = Status.Active,
+                    DateCreated = Caliper11TestEntities.Instant20180801060000,
+                    HideCaliperContext = true
+                },
+                Session = Caliper11TestEntities.Session6259_2018,
+                Target = new Link("https://example.edu/terms/201801/courses/7/sections/1/pages/1") { HideCaliperContext = true },
+                FederatedSession = new LtiSession("https://example.edu/lti/sessions/b533eb02823f31024e6b7f53436c42fb99b31241")
+                {
+                    User = new Person("https://example.edu/users/554433") { HideCaliperContext = true },
+                    DateCreated = Caliper11TestEntities.Instant20181115101500,
+                    StartedAt = Caliper11TestEntities.Instant20181115101500,
+                    HideCaliperContext = true
+                }
+            };
+
+            var coerced = JsonAssertions.coerce(toolLaunchEvent, new[] { "..membership.member", "..membership.organization" });
+
+            JsonAssertions.AssertSameObjectJson(coerced, "caliperEventToolLaunchReturned");
+        }
     }
 }
