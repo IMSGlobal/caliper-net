@@ -159,6 +159,12 @@ The build output will be under `.\src\ImsGlobal.Caliper\bin\Debug` or `.src\ImsG
 
 # Running Tests
 
+## From Visual Studio
+* Install [NUnit TestAdapter](https://marketplace.visualstudio.com/items?itemName=NUnitDevelopers.NUnit3TestAdapter) (Close Visual Studio before installing)
+* From Visual Studio Menue Bar: Select 'Tools->Windows->Test Explorer'
+* Right click on the appropriate test, select 'Run' or 'Debug'
+
+## From the Command Line
 ```
 > cd caliper-net
 > .nuget\nuget.exe install NUnit.Runners -Version 2.6.4 -OutputDirectory packages
