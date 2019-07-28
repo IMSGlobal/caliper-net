@@ -1,5 +1,7 @@
 # IMS Global Learning Consortium, Inc.
 
+[![Build Status](https://travis-ci.org/IMSGlobal/caliper-net.svg?branch=develop)](https://travis-ci.org/IMSGlobal/caliper-net)
+
 ## caliper-net
 
 The Caliper Analytics® Specification provides a structured approach to describing, collecting and exchanging learning activity data at scale. Caliper also defines an application programming interface (the Sensor API™) for marshalling and transmitting event data from instrumented applications to target endpoints for storage, analysis and use.
